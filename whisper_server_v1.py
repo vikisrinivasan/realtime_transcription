@@ -1,6 +1,3 @@
-import tornado.ioloop
-import tornado.web
-import tornado.gen
 import base64
 from faster_whisper import WhisperModel
 import io
@@ -93,17 +90,17 @@ def transcribe(audio_file_path, temperature=default_temperature, reference_text=
     transcription = transcription.strip()
     entities = detect_entities(transcription)
     
-    word_error_rate = None
-    if reference_text:
-        word_error_rate = calculate_wer(reference_text, transcription)
+    # word_error_rate = None
+    # if reference_text:
+    #     word_error_rate = calculate_wer(reference_text, transcription)
     
-    return transcription, info, entities, word_error_rate
+    return transcription, info, entities
 
 if __name__ == "__main__":
-    audio_file_path = "test_audio.wav"
+    audio_file_path = "audi_trimmed.wav"
     temperature = 0.2
     reference_text = "This is a sample reference text for WER calculation."
-    transcription_result, info, entities, word_error_rate = transcribe(audio_file_path, temperature, reference_text)
+    transcription_result, info, entities = transcribe(audio_file_path, temperature, reference_text)
     print(f"Transcription result (temperature={temperature}):")
     print(transcription_result)
     print(f"\nDetected language: {info.language}")
